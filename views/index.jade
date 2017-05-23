@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  form(action="/fight" method="POST")
+    input(type="number" required="true" placeholder="Number of fights")
+    input(type="submit" label="Go!")
