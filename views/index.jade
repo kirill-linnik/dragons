@@ -4,6 +4,8 @@ block content
   h1= title
   p Welcome to #{title}
 
-  form(action="/fight" method="POST")
-    input(type="number" required="true" placeholder="Number of fights")
+  div(class="error")= error
+
+  form(action="/fight" method="GET")
+    input(type="number" name="numberOfFights" required="true" placeholder="Number of fights (1-100)")
     input(type="submit" label="Go!")
