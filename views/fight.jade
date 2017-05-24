@@ -1,0 +1,9 @@
+extends layout
+
+block content
+
+  ul
+    each fightResult in fightResults
+      li= fightResult.result.status
+
+  input(type="button" onclick="window.location.href='/'" value="back")

@@ -11,51 +11,47 @@ const knightToDragonStats = {
 let gameStatistics = new Array();
 
 function fight(numberOfFights){
+  gameStatistics = new Array();
+  let games = new Array();
   for ( let i = 0; i < numberOfFights; i++ ){
-    getGame();
+    let game = getGame();
+    games.push(game);
   }
+
+  Promise.all(games);
   return gameStatistics;
 };
-
-function displayProgress(){
-  console.log(gameStatistics.length)
-}
 
 function getGame(){
   let options = {
     uri: 'http://www.dragonsofmugloar.com/api/game',
-    json: true
+    json: true,
+    async: false
   };
 
-  rp(options)
-    .then(function(game) {
-      getWeather(game);
-    })
-    .catch(function (err) {
-      gameStatistics.push({
-        err: err
-      });
-      console.log(err);
-    });
+  return rp(options)
+    .then(game => getWeather(game))
+    .catch(err => console.log(err));
 }
 
 function getWeather(game){
   let options = {
-    uri: `http://www.dragonsofmugloar.com/weather/api/report/${game.gameId}`
+    uri: `http://www.dragonsofmugloar.com/weather/api/report/${game.gameId}`,
+    async: false
   };
 
-  rp(options)
-    .then(function(xmlString) {
-      xml2js.parseString(xmlString, function (err, weather) {
-        performFight(game, weather);
-      });
-    })
-    .catch(function (err) {
-      gameStatistics.push({
+  return rp(options)
+    .then(xmlString =>
+      xml2js.parseString(xmlString, (err, weather) =>
+        performFight(game, weather)
+      )
+    )
+    .catch(err => {
+      console.log(err);
+      return {
         game: game,
         err: err
-      });
-      console.log(err);
+      };
     });
 }
 
@@ -69,11 +65,12 @@ function performFight(game, weather){
     body: {
       dragon: dragon
     },
-    json: true
+    json: true,
+    async: false
   };
 
-  rp(options)
-    .then(function(gameResult) {
+  return rp(options)
+    .then(gameResult => {
       gameStatistics.push({
         game: game,
         weather: weather,
@@ -81,14 +78,14 @@ function performFight(game, weather){
         result: gameResult
       });
     })
-    .catch(function (err) {
+    .catch(err => {
+      console.log(err);
       gameStatistics.push({
         game: game,
         weather: weather,
         dragon: dragon,
         err: err
       });
-      console.log(err);
     });
 }
 
