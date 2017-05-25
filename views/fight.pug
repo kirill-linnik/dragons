@@ -35,11 +35,14 @@ block content
     tbody
       each fightResult, i in fightResults
         tr(class=(i % 2 == 0) ? 'odd' : 'even')
-          td #{fightResult.game.gameId}
-          td #{fightResult.game.knight.name} (#{fightResult.game.knight.armor}, #{fightResult.game.knight.attack}, #{fightResult.game.knight.agility}, #{fightResult.game.knight.endurance})
-          td #{fightResult.dragon.scaleThickness}, #{fightResult.dragon.clawSharpness}, #{fightResult.dragon.wingStrength}, #{fightResult.dragon.fireBreath}
-          td #{fightResult.weather.report.code[0]}
-          td(class=(fightResult.result.status == 'Victory') ? 'green' : 'red') #{fightResult.result.status}
+          if (fightResult.err)
+            td(colspan=5 class='red') #{JSON.stringify(fightResult.err)}
+          else
+            td #{fightResult.game.gameId}
+            td #{fightResult.game.knight.name} (#{fightResult.game.knight.armor}, #{fightResult.game.knight.attack}, #{fightResult.game.knight.agility}, #{fightResult.game.knight.endurance})
+            td #{fightResult.dragon.scaleThickness}, #{fightResult.dragon.clawSharpness}, #{fightResult.dragon.wingStrength}, #{fightResult.dragon.fireBreath}
+            td #{fightResult.weather.report.code[0]}
+            td(class=(fightResult.result.status == 'Victory') ? 'green' : 'red') #{fightResult.result.status}
 
   br
 

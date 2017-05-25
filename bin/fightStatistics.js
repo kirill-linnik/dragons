@@ -1,3 +1,4 @@
+//nothing fancy here: some maths and filtering magic
 function getStatistics(fightResults){
   let battlesTotal = fightResults.length;
   let victories = fightResults.filter(value => {return value.result.status == "Victory"}).length;

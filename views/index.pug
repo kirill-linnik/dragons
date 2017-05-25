@@ -1,8 +1,10 @@
 extends layout
 
 block content
-  div(class="error")= error
+
+  if (error)
+    div(class="error") #{error} #{maximumNumberOfFights}
 
   form(action="/fight" method="GET")
-    input(type="number" name="numberOfFights" required="true" placeholder="Number of fights (1-100)")
+    input(type="number" name="numberOfFights" required="true" placeholder="Number of fights (1-"+maximumNumberOfFights+")")
     input(type="submit" label="Go!")
