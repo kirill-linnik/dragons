@@ -15,7 +15,7 @@ block content
         td #{fightStatistics.battlesTotal}
       tr
         td Victories
-        td #{fightStatistics.victories} (#{fightStatistics.victoryPercent}%)
+        td(class=(fightStatistics.victoryPercent > 50) ? 'green' : 'red') #{fightStatistics.victories} (#{fightStatistics.victoryPercent}%)
       tr
         td Loses
         td #{fightStatistics.loses} (#{fightStatistics.losesPercent}%)
@@ -39,7 +39,8 @@ block content
           td #{fightResult.game.knight.name} (#{fightResult.game.knight.armor}, #{fightResult.game.knight.attack}, #{fightResult.game.knight.agility}, #{fightResult.game.knight.endurance})
           td #{fightResult.dragon.scaleThickness}, #{fightResult.dragon.clawSharpness}, #{fightResult.dragon.wingStrength}, #{fightResult.dragon.fireBreath}
           td #{fightResult.weather.report.code[0]}
-          td #{fightResult.result.status}
+          td(class=(fightResult.result.status == 'Victory') ? 'green' : 'red') #{fightResult.result.status}
 
+  br
 
   input(type="button" onclick="window.location.href='/'" value="back")
