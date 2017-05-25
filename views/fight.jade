@@ -2,8 +2,44 @@ extends layout
 
 block content
 
-  ul
-    each fightResult in fightResults
-      li= fightResult.result.status
+  h2 Statistics
+
+  h2 Battle details
+
+  table
+    thead
+      tr
+        th Parameter
+        th Value
+    tbody
+      tr
+        td Battles made
+        td #{fightStatistics.battlesTotal}
+      tr
+        td Victories
+        td #{fightStatistics.victories} (#{fightStatistics.victoryPercent}%)
+      tr
+        td Loses
+        td #{fightStatistics.loses} (#{fightStatistics.losesPercent}%)
+
+  table
+    thead
+      tr
+        th(colspan="5") Battles
+      tr
+        th Game ID
+        th Knight's name (armor, attack, agility, endurance)
+        th Dragon's scale thickness, claw sharpness, wing strength, fire breath
+        th Weather code
+        th Status
+    tbody
+      each fightResult, i in fightResults
+        tr(class=(i % 2 == 0) ? 'odd' : 'even')
+          td #{fightResult.game.gameId}
+          td #{fightResult.game.knight.name} (#{fightResult.game.knight.armor}, #{fightResult.game.knight.attack}, #{fightResult.game.knight.agility}, #{fightResult.game.knight.endurance})
+          td #{fightResult.dragon.scaleThickness}, #{fightResult.dragon.clawSharpness}, #{fightResult.dragon.wingStrength}, #{fightResult.dragon.fireBreath}
+          td #{fightResult.weather.report.code[0]}
+          td #{fightResult.result.status}
+
 
   input(type="button" onclick="window.location.href='/'" value="back")

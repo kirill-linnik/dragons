@@ -1,5 +1,5 @@
 const rp = require('request-promise');
-const xml2js = require('xml2js');
+const xml2js = require('xml2js-es6-promise');
 
 const knightToDragonStats = {
   'attack': 'scaleThickness',
@@ -14,12 +14,12 @@ function fight(numberOfFights){
   gameStatistics = new Array();
   let games = new Array();
   for ( let i = 0; i < numberOfFights; i++ ){
-    let game = getGame();
-    games.push(game);
+    games.push(getGame());
   }
 
-  Promise.all(games);
-  return gameStatistics;
+  return Promise.all(games).then(results => {
+    return results;
+  });
 };
 
 function getGame(){
@@ -41,11 +41,7 @@ function getWeather(game){
   };
 
   return rp(options)
-    .then(xmlString =>
-      xml2js.parseString(xmlString, (err, weather) =>
-        performFight(game, weather)
-      )
-    )
+    .then(xmlString => weatherToJS(game, xmlString))
     .catch(err => {
       console.log(err);
       return {
@@ -54,6 +50,17 @@ function getWeather(game){
       };
     });
 }
+
+function weatherToJS(game, weatherXml){
+  return xml2js(weatherXml)
+    .then(weather => performFight(game, weather))
+    .catch(err => {
+      console.log(err);
+      return {
+        game: game,
+        err: err
+      }});
+  }
 
 function performFight(game, weather){
   let knight = game.knight;
@@ -71,21 +78,21 @@ function performFight(game, weather){
 
   return rp(options)
     .then(gameResult => {
-      gameStatistics.push({
+      return {
         game: game,
         weather: weather,
         dragon: dragon,
         result: gameResult
-      });
+      };
     })
     .catch(err => {
       console.log(err);
-      gameStatistics.push({
+      return {
         game: game,
         weather: weather,
         dragon: dragon,
         err: err
-      });
+      };
     });
 }
 
