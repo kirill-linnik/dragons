@@ -15,7 +15,7 @@ execution: battles won are the test result.
 
 ## TODO
 TODO list can be huge: introduce some framework (for example, `ReactJS`) to
-the frond-end, make more deep analysis, improve UX, introduce `CSS3` with
+the frond-end, make more deep analysis and improvements in UX, introduce `CSS3` with
 animated dragons, and even implement machine learning instead of parameter
 recalculation ("what if fight rules are changed, right?"), but...
 good enough is good enough. Code does what it should :-)
