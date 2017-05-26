@@ -20,9 +20,14 @@ function fight(numberOfFights){
     games.push(getGame());
   }
 
-  return Promise.all(games).then(results => {
-    return results;
-  });
+  return Promise.all(games)
+    .then(results => {
+      return results;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
 };
 
 //let's play a game...
@@ -52,10 +57,7 @@ function getWeather(game){
     .then(xmlString => weatherToJS(game, xmlString))
     .catch(err => {
       console.log(err);
-      return {
-        game: game,
-        err: err
-      };
+      return err;
     });
 }
 
@@ -65,11 +67,8 @@ function weatherToJS(game, weatherXml){
     .then(weather => performFight(game, weather))
     .catch(err => {
       console.log(err);
-      return {
-        game: game,
-        err: err
-      }}
-    );
+      return err;
+    });
 }
 
 //and fight the knight
@@ -98,12 +97,7 @@ function performFight(game, weather){
     })
     .catch(err => {
       console.log(err);
-      return {
-        game: game,
-        weather: weather,
-        dragon: dragon,
-        err: err
-      };
+      return err;
     });
 }
 
