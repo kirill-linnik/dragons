@@ -1,6 +1,6 @@
 ## Synopsis
 
-Based on http://www.dragonsofmugloar.com/ test assessment where 
+Based on http://www.dragonsofmugloar.com/ test assignment where 
 I wanted to try out things haven't done before: `ES6` with `NodeJS`, `NPM` 
 and set of modules like `request-promise`. 
 
